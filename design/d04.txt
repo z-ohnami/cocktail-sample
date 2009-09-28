@@ -1,0 +1,74 @@
+{
+  "language": "javascript",
+  "views": {
+    "gin-by-proof" : {
+      "map": "function(doc) {
+        if (doc.proof && doc.base == \"ジン\") {
+            emit(doc.proof, doc.name);
+          }}"
+       },
+    "all-by-base" : {
+      "map": "function(doc) {
+        if (doc.name) {
+            emit(doc.base, doc.name);
+          }}"
+       }
+   },
+  "shows": {
+     "show-detail": "(function (doc, req) {
+        if (doc) {
+           var str;
+           str = \"<h2>\" + doc.name + \"</h2><ul>\";
+           str = str + \"<li>度数:\" + doc.proof + \"</li>\";
+           str = str + \"<li>ベースのお酒:\" + doc.base + \"</li>\";
+           str = str + \"<li>作り方:\" + doc.howto + \"</li>\";
+
+           str = str + \"<li>レシピ:<ul>\";
+           for(var r in doc.recipe) {
+              str = str + \"<li>\" + r + \":\" +doc.recipe[r] + \"</li>\";
+           }
+           str = str + \"</ul></li>\";
+
+           str = str + \"<li>シチュエーション:\";
+           for(var i in doc.situation) {
+              if (i > 0) str = str + \",\";
+              str = str + doc.situation[i];
+           }
+           str = str + \"</li></ul>\";
+
+           if (doc._attachments) {
+
+              str = str + \"<img src=\\\"../../../../\" + doc._id + \"/\" + doc._id + \".jpg\\\">\";
+
+           }
+
+           return str;
+
+      } else {
+        if (req.docId) {
+           return \"Undefined Document...\";
+        } else {
+           return \"docId is empty...\";
+        }
+      }
+    })"
+  },
+  "lists": {
+     "cocktail-list": "(function (head, row, req, row_info) {
+         if (head) {
+            return {
+               body: \"<html><head></head><body><h2>Cocktail recipe book</h2><ul>\"
+            };
+         } else if (row) {
+            var url = \"../../_show/show-detail/\";
+            return {
+               body: \" <li><a href=\\\"\" + url + row.id +\"\\\">\" + row.value + \"</a></li>\"
+            };
+         } else {
+            return {
+               body: \"</ul></body></html>\"
+            };
+         }
+     })"
+   }
+}

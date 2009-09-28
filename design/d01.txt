@@ -1,0 +1,17 @@
+{
+  "language": "javascript",
+  "views": {
+    "gin-by-proof" : {
+      "map": "function(doc) {
+        if (doc.proof && doc.base == \"ジン\") {
+            emit(doc.proof, doc.name);
+          }}"
+       },
+   "all-by-base" : {
+      "map": "function(doc) {
+        if (doc.name) {
+            emit(doc.base, doc.name);
+          }}"
+       }
+   }
+}

@@ -1,0 +1,16 @@
+{
+  "language": "javascript",
+  "views": {
+     "gin-sum": {
+      "map": "function(doc) {
+        if (doc.base) {
+          if (doc.base == \"ジン\") {
+             emit(null, 1);
+            }
+         }}",
+      "reduce": "function(key,value) {
+         return sum(value);
+        }"
+     }
+   }
+}
