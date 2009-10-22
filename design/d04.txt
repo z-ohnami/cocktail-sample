@@ -69,6 +69,17 @@
                body: \"</ul></body></html>\"
             };
          }
+     })",
+     "cocktail-list10": "(function (head, req) {
+         provides(\"html\",function() {
+            send(\"<html><head><meta http-equiv=\\\"Content-Type\\\" content=\\\"text/html\\\"></head><body><h2>Cocktail recipe book</h2><ul>\");
+            var row;
+            var url = \"../../_show/show-detail/\";
+            while(row = getRow()) {
+               send(\" <li><a href=\\\"\" + url + row.id +\"\\\">\" + row.value + \"</a></li>\");
+            };
+            return \"</ul></body></html>\";
+         });
      })"
    }
 }
